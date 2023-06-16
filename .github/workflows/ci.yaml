@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run security checker
+        run: vendor/bin/local-php-security-checker composer.lock
+
+  php-code-standard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run PHP Coding Standards
+        run: |
+          vendor/bin/php-cs-fixer fix ./src --dry-run --rules=@Symfony --verbose
+          vendor/bin/phpstan analyse ./src -l3
+          vendor/bin/phpdd ./src
+          vendor/bin/phpcpd ./src --exclude './src/Controller/Admin/' --exclude './src/Entity/'
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run PHP Lint
+        run: |
+          ./bin/console lint:twig templates --env=prod
+          ./bin/console lint:yaml config --parse-tags
+          ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
