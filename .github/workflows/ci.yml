@@ -1,0 +1,45 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+
+      - name: Install Composer dependencies
+        run: make composer-install
+
+      - name: Install npm dependencies
+        run: make npm-install
+
+      - name: Build assets
+        run: make npm-build
+
+      - name: Start Symfony server
+        run: make sf-start
+
+      # Ajoutez les autres étapes du Makefile que vous souhaitez exécuter
+
+      - name: Run security-checker
+        run: make qa-security-checker
+
+      - name: Run php-cs-fixer
+        run: make qa-cs-fixer
+
+      # Ajoutez les autres étapes de vérification de qualité du code
+
+      - name: Run tests
+        run: make tests
