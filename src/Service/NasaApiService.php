@@ -7,15 +7,16 @@ use Symfony\Component\Dotenv\Dotenv;
 
 class NasaApiService
 {
-    public function __construct(
-        private HttpClientInterface $httpClient
-    ) {
+    private $httpClient;
+
+    public function __construct(HttpClientInterface $httpClient) {
+        $this->httpClient = $httpClient;
     }
 
     public function getApodData(): array
     {
         $dotenv = new Dotenv();
-        $dotenv->loadEnv(__DIR__.'/.env');
+        $dotenv->loadEnv(__DIR__.'/../../.env.local');
         $apikey = $_ENV['NASA_API_KEY'];
 
         //utiliser HttpClient pour se connecter à l'API
@@ -30,12 +31,7 @@ class NasaApiService
 
         $statusCode = $response->getStatusCode();
 
-        if ($statusCode === 200) {
-            $content = $response->toArray();
-            return $content;
-        } else {
-            throw new \Exception("Erreur lors de la requête à l'API de la NASA");
-        }
+        return $response->toArray();
 
     }
 
