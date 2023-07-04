@@ -12,7 +12,8 @@ class HomeController extends AbstractController
     #[Route('', name: 'index')]
     public function index(NasaApiService $nasaApiService): Response
     {
-        $data = $nasaApiService->getApodData();
+        $data = $nasaApiService->getApod();
+
 
         return $this->render('home/index.html.twig', [
             'datas' => $data

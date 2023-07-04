@@ -13,26 +13,43 @@ class NasaApiService
         $this->httpClient = $httpClient;
     }
 
-    public function getApodData(): array
+    private function getApiKey(): string
     {
         $dotenv = new Dotenv();
         $dotenv->loadEnv(__DIR__.'/../../.env.local');
-        $apikey = $_ENV['NASA_API_KEY'];
+        return $_ENV['NASA_API_KEY'];
 
-        //utiliser HttpClient pour se connecter à l'API
+    }
+
+    public function getApod(): array
+    {
         $response = $this->httpClient->request(
             'GET',
-            'https://api.nasa.gov/planetary/apod', [
+            'https://api.nasa.gov/planetary/apod',
+            [
                 'query' => [
-                    'api_key' => $apikey
+                    'api_key' => $this->getApiKey()
                 ]
             ]
         );
 
-        $statusCode = $response->getStatusCode();
+        return $response->toArray();
+    }
+
+    public function getSeveralPictures(int $var=2): array
+    {
+        $response = $this->httpClient->request(
+            'GET',
+            'https://api.nasa.gov/planetary/apod',
+            [
+                'query' => [
+                    'api_key' => $this->getApiKey(),
+                    'count' => $var,
+                ]
+            ]
+        );
 
         return $response->toArray();
-
     }
 
 }
