@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\MediaRepository;
-use App\Repository\PictureRepository;
 use App\Service\NasaApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,11 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(MediaRepository $mediaRepository, PictureRepository $pictureRepository): Response
+    public function index(NasaApiService $nasaApiService): Response
     {
-        $media = $mediaRepository->findOneBy(['name'=> 'image']);
-        $image = $pictureRepository->findAll();
-        $image = $pictureRepository->findOneBy(['Medias' => $media]);
+        $image = $nasaApiService->getApod();
 //        dd($image);
 
         return $this->render('home/index.html.twig', [
