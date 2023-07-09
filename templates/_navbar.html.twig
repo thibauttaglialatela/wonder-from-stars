@@ -1,20 +1,18 @@
-<nav class="mt-0 w-full">
+<nav class="mt-0 w-full bg-gradient-to-r from-sky-950 to-sky-100 sticky top-0">
     <div class="container mx-auto flex items-center">
-
+        {% set links = [
+            { 'title' : 'Home', 'path' : path('home_index') },
+            { 'title' : 'Sign in', 'path' : '#' }
+        ] %}
+        {% set currentUrl = app.request.getRequestUri() %}
         <div class="flex w-1/2 pl-4 text-sm">
             <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
-                <li class="mr-2">
-                    <a class="inline-block py-2 px-2 text-gray-200 no-underline hover:underline" href="#">Home</a>
-                </li>
-                <li class="mr-2">
-                    <a class="inline-block text-gray-200 no-underline hover:underline py-2 px-2" href="#">LINK</a>
-                </li>
-                <li class="mr-2">
-                    <a class="inline-block text-gray-200 no-underline hover:underline py-2 px-2" href="#">LINK</a>
-                </li>
-                <li class="mr-2">
-                    <a class="inline-block text-gray-200 no-underline hover:underline py-2 px-2" href="#">POST_VUE</a>
-                </li>
+                {% for link in links %}
+                    <li class="mr-2">
+                        <a class="inline-block py-2 px-2  {{ currentUrl == link.path ? 'text-blue-500' : 'text-gray-200 no-underline hover:underline' }}"
+                           href="{{ link.path }}">{{ link.title }}</a>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
 
