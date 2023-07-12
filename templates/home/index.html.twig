@@ -33,7 +33,7 @@
 
                             <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow-lg p-6">
                                 <div class="flex items-center justify-between">
-                                    {% if image.copyright %}
+                                    {% if image.copyright is defined %}
                                         <p class="text-gray-600 text-base md:text-sm">Author: {{ image.copyright }}</p>
                                     {% endif %}
                                     <p class="text-gray-600 text-base md:text-sm">Published the: {{ image.date|date("d/m/Y") }}</p>
