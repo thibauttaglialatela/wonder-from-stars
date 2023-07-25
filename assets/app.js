@@ -7,3 +7,13 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import 'tw-elements';
+
+// Initialization for ES Users
+import {
+    Input,
+    Ripple,
+    initTE,
+} from "tw-elements";
+
+initTE({ Input, Ripple });
