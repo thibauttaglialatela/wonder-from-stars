@@ -2,7 +2,7 @@
     <div class="container mx-auto flex items-center">
         {% set links = [
             { 'title' : 'Home', 'path' : path('home_index') },
-            { 'title' : 'Sign in', 'path' : '#' }
+            { 'title' : 'Register', 'path' : path('app_register') }
         ] %}
         {% set currentUrl = app.request.getRequestUri() %}
         <div class="flex w-1/2 pl-4 text-sm">
