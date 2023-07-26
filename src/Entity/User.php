@@ -42,10 +42,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'Your password must be at least {{ limit }} characters long',
         maxMessage: 'Your password cannot be longer than {{ limit }} characters',
     )]
-    #[Assert\Regex('^(?=.*[a-zA-Z])(?=.*[\d])(?=.*[&#@$£ù%])[a-zA-Z\d&#@$£ù%]+$')]
+    #[Assert\Regex(
+        pattern: '/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/',
+        message: "Your password must contain letters, numbers, special characters, and be at least 8 characters long."
+    )]
     private ?string $password = null;
-
-//    TODO: ajouter une propriété booléenne pour dire que la personne a accepté les conditions
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Pseudo = null;
