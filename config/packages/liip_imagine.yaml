@@ -2,3 +2,17 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+    twig:
+        mode: lazy
+    webp:
+        generate: true
+
+    filter_sets:
+        cache: ~
+
+        # the name of the "filter set"
+        image_compressed:
+
+            # adjust the image quality to 75%
+            quality: 75
+

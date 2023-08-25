@@ -20,7 +20,7 @@
                 <div class="flex flex-col md:flex-row h-full bg-white rounded overflow-hidden shadow-lg">
                     <div class="md:w-2/3">
                         {% if image.copyright is defined %}
-                            <img src="{{ asset('build/galaxy-red-and-blue.jpg') }}" alt="galaxie rouge et bleue"
+                            <img src="{{ asset('build/galaxy-red-and-blue.jpg')|imagine_filter('image_compressed') }}" alt="galaxie rouge et bleue"
                                  class="h-full w-full shadow">
                         {% else %}
                             <img src="{{ image.url }}" alt="{{ image.title }}" class="h-full w-full shadow">
@@ -32,7 +32,7 @@
                                 <h2 class="w-full font-bold text-xl text-gray-900 px-6">Un ciel étoilé</h2>
                                 <p class="text-gray-800 font-serif text-base">
                                     Sous le dôme noir de la nuit, un spectacle céleste extraordinaire se dévoile.
-                                    Des milliers d'étoiles scintillent telles des diamants éparpillés sur un velours
+                                    Des milliers d'étoiles scintillent tels des diamants éparpillés sur un velours
                                     sombre. La Voie lactée, cette voie de lumière diffuse et mystérieuse, s'étire telle
                                     une écharpe d'argent à travers le firmament. Chaque étoile est une histoire en soi,
                                     une lueur venue de millions d'années-lumière pour caresser nos yeux émerveillés.
