@@ -23,10 +23,10 @@
                                         <h4 class="mb-12 mt-1 pb-1 text-xl font-semibold">
                                             Login form
                                         </h4>
+                                        {% if error %}
+                                            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                        {% endif %}
                                     </div>
-                                    {% if error %}
-                                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                    {% endif %}
                                     <form action="{{ path('app_login') }}" method="post">
                                         <!--Username input-->
                                         <div class="relative mb-4" data-te-input-wrapper-init>
@@ -58,7 +58,7 @@
                                             >Password
                                             </label>
                                         </div>
-
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                         <!--Submit button-->
                                         <div class="mb-12 pb-1 pt-1 text-center">
                                             <button
