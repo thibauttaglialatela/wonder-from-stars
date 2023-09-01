@@ -15,35 +15,37 @@ class AppFixtures extends Fixture
 {
     const MEDIAS = ['image', 'video'];
     private UserPasswordHasherInterface $passwordHasher;
-    public function __construct(UserPasswordHasherInterface $passwordHasher) {
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
         $this->passwordHasher = $passwordHasher;
     }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
         $medias = [];
-        foreach(self::MEDIAS as $value) {
+        foreach (self::MEDIAS as $value) {
             $media = new Media();
             $media->setName($value);
             $manager->persist($media);
             $medias[] = $media;
-    }
-
-        //création de 10 utilisateurs
-        $users = [];
-        for ($i = 0; $i < 10; $i++) {
-            $user = new User();
-            $user->setEmail($faker->email());
-            $user->setPseudo($faker->userName());
-            $plaintextPassword = $faker->password();
-            $hashedPassword = $this->passwordHasher->hashPassword(
-                $user,
-                $plaintextPassword
-            );
-            $user->setPassword($hashedPassword);
-            $manager->persist($user);
-            $users[] = $user;
         }
+
+        //création d'un utilisateur
+        $users = [];
+        $user = new User();
+        $user->setEmail('luke.skywalker@jedi.com');
+        $user->setPseudo('Luke Skywalker');
+        $plaintextPassword = 'St@rwars';
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $user,
+            $plaintextPassword
+        );
+        $user->setPassword($hashedPassword);
+        $manager->persist($user);
+        $users[] = $user;
+
 
         //création de 10 images
         $pictures = [];

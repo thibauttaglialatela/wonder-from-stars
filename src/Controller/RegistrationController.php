@@ -36,7 +36,6 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // password for tests : Acv5hA&M
             $emailService->sendEmail($user);
             $this->addFlash('notice', 'bravo vous êtes inscrit');
 
