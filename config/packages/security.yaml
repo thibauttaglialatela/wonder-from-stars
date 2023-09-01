@@ -21,6 +21,8 @@ security:
                 check_path: app_login
                 default_target_path: home_index
                 enable_csrf: true
+            login_throttling:
+                max_attempts: 3
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 

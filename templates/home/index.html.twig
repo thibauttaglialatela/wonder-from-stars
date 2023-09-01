@@ -8,6 +8,9 @@
         <div class="container max-w-5xl mx-auto pt-16 md:pt-32 text-center break-normal">
             <!--Title-->
             <h1 class="text-white font-extrabold text-2xl md:text-7xl w-full">
+                {% if app.user %}
+                    🔭 Welcom to Wonders from the sky {{ app.user.pseudo}} 🔭
+                {% endif %}
                 🔭 Wonders from the sky 🔭
             </h1>
         </div>
