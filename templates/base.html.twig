@@ -14,6 +14,11 @@
     </head>
     <body class="bg-sky-950 font-sans leading-normal tracking-normal flex flex-col min-h-screen">
     {% include'_navbar.html.twig' %}
+    {% for message in app.flashes('notice') %}
+    <div class="bg-green-200 text-green-800 p-4 mb-4">
+        {{ message }}
+    </div>
+    {% endfor %}
         {% block body %}{% endblock %}
 
     {% include '_footer.html.twig' %}
