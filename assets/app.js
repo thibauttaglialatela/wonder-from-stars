@@ -11,9 +11,11 @@ import 'tw-elements';
 
 // Initialization for ES Users
 import {
+    Collapse,
+    Dropdown,
     Input,
     Ripple,
     initTE,
 } from "tw-elements";
 
-initTE({ Input, Ripple });
+initTE({ Input, Ripple, Collapse, Dropdown });
