@@ -36,7 +36,7 @@ class NasaApiService
         return $response->toArray();
     }
 
-    public function getSeveralPictures(int $var=2): array
+    public function getSeveralPictures(int $var=10): array
     {
         $response = $this->httpClient->request(
             'GET',
