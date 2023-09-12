@@ -55,6 +55,15 @@
                     >Home</a
                     >
                 </li>
+                <li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
+                    <!-- CarouselPage link -->
+                    <a
+                            class="{{ currentUrl == path('app_carousel') ? 'text-blue-500' : 'text-neutral-50 transition duration-200 hover:text-neutral-100 hover:ease-in-out' }} focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2"
+                            href="{{ path('app_carousel') }}"
+                            data-te-nav-link-ref
+                    >Images de la NASA</a
+                    >
+                </li>
 
                 {% if app.user %}
                 {% else %}

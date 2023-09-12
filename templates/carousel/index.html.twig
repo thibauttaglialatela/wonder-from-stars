@@ -1,15 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CarouselController!{% endblock %}
+{% block title %}{{ parent() }} - Carousel{% endblock %}
 
 {% block body %}
-    <div class="w-full m-0 p-0 bg-cover bg-bottom"
-         style="background-image:{{ asset('unsplash.jpg') }}; height: 60vh; max-height:460px;">
+    <div class="w-full m-0 p-0 bg-cover bg-bottom">
         <div class="container max-w-5xl mx-auto pt-16 md:pt-32 text-center break-normal">
             <!--Title-->
             <h1 class="text-white font-extrabold text-2xl md:text-6xl w-full">
-                    🔭 The last wonders 🔭
+                🔭 Pictures from the NASA 🔭
             </h1>
         </div>
+        <hr
+                class="my-12 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500
+                to-transparent opacity-25 dark:opacity-100"/>
     </div>
+    <div
+            class="block md:mb-8 w-screen md:w-1/3 rounded-lg bg-neutral-50 mx-auto">
+        <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200 px-3">
+            Veuillez sélectionner une date de début de recherche de photos.
+        </p>
+        {{ form_start(form) }}
+        <div
+                class="relative mb-3"
+                id="datepicker-disable-future"
+                data-te-input-wrapper-init>
+            {{ form_widget(form.start_date, {
+                'attr': {
+                    'class': "peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6]
+                outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100
+                peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100
+                motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200
+                dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0",
+                    'placeholder': "Select the starting date"
+                }
+            }) }}
+            {{ form_label(form.start_date, 'Select the starting date', {
+                'label_attr': {
+                    'class': 'pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem]
+                leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem]
+                peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem]
+                peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200
+                dark:peer-focus:text-primary',
+                    'for': 'floatingInput'
+                }
+            }) }}
+        </div>
+        <button
+                class="bg-gradient-to-r from-sky-950 to-sky-100  mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                type="submit"
+                data-te-ripple-init
+                data-te-ripple-color="light"
+        >
+            Select
+        </button>
+        {{ form_end(form) }}
+    </div>
+    {% if images is not empty %}
+        <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
+            <div class="-m-1 flex justify-evenly flex-wrap md:-m-2">
+                {% for image in images %}
+                    <div class="flex w-1/3 flex-wrap">
+                        <div class="max-w-sm h-auto p-1 md:p-2 relative">
+                            <img
+                                    alt="{{ image.title }}"
+                                    class="block h-full w-full rounded-lg object-cover object-center"
+                                    src="{{ image.url }}" />
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-opacity-80 bg-black text-white">
+                                <h5 class="text-xl font-medium">{{ image.title }}</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% endif %}
+
+
 {% endblock %}

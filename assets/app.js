@@ -11,11 +11,18 @@ import 'tw-elements';
 
 // Initialization for ES Users
 import {
+    Datepicker,
     Collapse,
     Dropdown,
     Input,
     Ripple,
     initTE,
+    Carousel
 } from "tw-elements";
 
-initTE({ Input, Ripple, Collapse, Dropdown });
+initTE({ Input, Ripple, Collapse, Dropdown, Carousel, Datepicker });
+
+const datepickerDisableFuture = document.getElementById('datepicker-disable-future');
+new Datepicker(datepickerDisableFuture, {
+    disableFuture: true
+});
