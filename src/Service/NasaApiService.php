@@ -36,7 +36,7 @@ class NasaApiService
         return $response->toArray();
     }
 
-    public function getSeveralPictures(int $var=2): array
+    public function getSeveralPictures(string $date): array
     {
         $response = $this->httpClient->request(
             'GET',
@@ -44,7 +44,7 @@ class NasaApiService
             [
                 'query' => [
                     'api_key' => $this->getApiKey(),
-                    'count' => $var,
+                    'start_date' => $date,
                 ]
             ]
         );

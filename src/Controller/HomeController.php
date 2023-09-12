@@ -13,7 +13,6 @@ class HomeController extends AbstractController
     public function index(NasaApiService $nasaApiService): Response
     {
         $image = $nasaApiService->getApod();
-//        dd($image);
 
         return $this->render('home/index.html.twig', [
             'image' => $image
