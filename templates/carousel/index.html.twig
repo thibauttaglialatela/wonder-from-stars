@@ -7,7 +7,7 @@
         <div class="container max-w-5xl mx-auto pt-16 md:pt-32 text-center break-normal">
             <!--Title-->
             <h1 class="text-white font-extrabold text-2xl md:text-6xl w-full">
-                🔭 Pictures from the NASA 🔭
+                🔭 Images from the NASA 🔭
             </h1>
         </div>
         <hr
@@ -57,19 +57,16 @@
     </div>
     {% if images is not empty %}
         <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
-            <div class="-m-1 flex justify-evenly flex-wrap md:-m-2">
+            <div class="-m-1 flex flex-wrap md:-m-2">
                 {% for image in images %}
-                    <div class="flex w-1/3 flex-wrap">
-                        <div class="max-w-sm h-auto p-1 md:p-2 relative">
+                    <div class="flex w-full md:w-1/3 flex-wrap mb-5">
+                        <figure class="w-full p-1 md:p-2">
                             <img
                                     alt="{{ image.title }}"
                                     class="block h-full w-full rounded-lg object-cover object-center"
                                     src="{{ image.url }}" />
-                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-opacity-80 bg-black text-white">
-                                <h5 class="text-xl font-medium">{{ image.title }}</h5>
-                            </div>
-                        </div>
-
+                            <figcaption class="text-white text-center w-full truncate">{{ image.title }}</figcaption>
+                        </figure>
                     </div>
                 {% endfor %}
             </div>
