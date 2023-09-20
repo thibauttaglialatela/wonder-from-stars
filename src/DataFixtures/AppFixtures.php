@@ -14,12 +14,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AppFixtures extends Fixture
 {
     const MEDIAS = ['image', 'video'];
-    private UserPasswordHasherInterface $passwordHasher;
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
-    {
-        $this->passwordHasher = $passwordHasher;
-    }
 
     public function load(ObjectManager $manager): void
     {
@@ -32,21 +26,6 @@ class AppFixtures extends Fixture
             $medias[] = $media;
         }
 
-        //création d'un utilisateur
-        $users = [];
-        $user = new User();
-        $user->setEmail('luke.skywalker@jedi.com');
-        $user->setPseudo('Luke Skywalker');
-        $plaintextPassword = 'St@rwars';
-        $hashedPassword = $this->passwordHasher->hashPassword(
-            $user,
-            $plaintextPassword
-        );
-        $user->setPassword($hashedPassword);
-        $manager->persist($user);
-        $users[] = $user;
-
-
         //création de 10 images
         $pictures = [];
         for ($i = 0; $i < 10; $i++) {
@@ -58,18 +37,6 @@ class AppFixtures extends Fixture
             $picture->setMedias($faker->randomElement($medias));
             $manager->persist($picture);
             $pictures[] = $picture;
-        }
-
-        //création des UserPictures
-        $userPictures = [];
-        for ($i = 0; $i < 10; $i++) {
-            $userPicture = new UserPicture();
-            $userPicture->setPictureCollector($faker->randomElement($pictures));
-            $userPicture->setCollector($faker->randomElement($users));
-            $userPicture->setRating($faker->numberBetween(0, 5));
-            $userPicture->setComment($faker->paragraph());
-            $userPicture->setCreatedAt($faker->dateTime());
-            $manager->persist($userPicture);
         }
 
 
