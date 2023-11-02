@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $email = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'simple_array')]
     private array $roles = [];
 
     /**
@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     #[Assert\Regex(
         pattern: '/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/',
-        message: "Your password must contain letters, numbers, special characters, and be at least 8 characters long."
+        message: 'Your password must contain letters, numbers, special characters, and be at least 8 characters long.'
     )]
     private ?string $password = null;
 
@@ -52,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $Pseudo = null;
 
     #[ORM\OneToMany(mappedBy: 'collector', targetEntity: UserPicture::class)]
+    /**
+     * @var Collection<int, UserPicture>
+     */
     private Collection $userPictures;
 
     public function __construct()
@@ -98,6 +101,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @return $this
+     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;

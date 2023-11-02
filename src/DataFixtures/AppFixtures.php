@@ -4,16 +4,13 @@ namespace App\DataFixtures;
 
 use App\Entity\Media;
 use App\Entity\Picture;
-use App\Entity\User;
-use App\Entity\UserPicture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    const MEDIAS = ['image', 'video'];
+    public const MEDIAS = ['image', 'video'];
 
     public function load(ObjectManager $manager): void
     {
@@ -26,9 +23,9 @@ class AppFixtures extends Fixture
             $medias[] = $media;
         }
 
-        //création de 10 images
+        // création de 10 images
         $pictures = [];
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $picture = new Picture();
             $picture->setTitle($faker->realText(80));
             $picture->setDescription($faker->paragraph());
@@ -38,7 +35,6 @@ class AppFixtures extends Fixture
             $manager->persist($picture);
             $pictures[] = $picture;
         }
-
 
         $manager->flush();
     }

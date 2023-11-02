@@ -2,14 +2,15 @@
 
 namespace App\Service;
 
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class NasaApiService
 {
     private $httpClient;
 
-    public function __construct(HttpClientInterface $httpClient) {
+    public function __construct(HttpClientInterface $httpClient)
+    {
         $this->httpClient = $httpClient;
     }
 
@@ -17,8 +18,8 @@ class NasaApiService
     {
         $dotenv = new Dotenv();
         $dotenv->loadEnv(__DIR__.'/../../.env.local');
-        return $_ENV['NASA_API_KEY'];
 
+        return $_ENV['NASA_API_KEY'];
     }
 
     public function getApod(): array
@@ -28,8 +29,8 @@ class NasaApiService
             'https://api.nasa.gov/planetary/apod',
             [
                 'query' => [
-                    'api_key' => $this->getApiKey()
-                ]
+                    'api_key' => $this->getApiKey(),
+                ],
             ]
         );
 
@@ -45,11 +46,10 @@ class NasaApiService
                 'query' => [
                     'api_key' => $this->getApiKey(),
                     'start_date' => $date,
-                ]
+                ],
             ]
         );
 
         return $response->toArray();
     }
-
 }

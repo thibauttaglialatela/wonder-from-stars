@@ -33,6 +33,9 @@ class Picture
     private ?Media $Medias = null;
 
     #[ORM\OneToMany(mappedBy: 'pictureCollector', targetEntity: UserPicture::class)]
+    /**
+     * @var Collection<\App\Entity\UserPicture
+     */
     private Collection $userPictures;
 
     public function __construct()

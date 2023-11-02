@@ -21,7 +21,6 @@ class EmailService
                 ->to($user->getEmail())
                 ->subject('Welcome to Wonders from stars')
                 ->text('Félicitation, vous venez de rejoindre les fans de wonders from stars');
-            $this->mailer->send($email);
+        $this->mailer->send($email);
     }
-
 }

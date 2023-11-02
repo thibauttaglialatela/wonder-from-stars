@@ -15,12 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request                     $request,
-                             UserPasswordHasherInterface $userPasswordHasher,
-                             EntityManagerInterface      $entityManager,
-                             EmailService                $emailService
-    ): Response
-    {
+    public function register(Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface $entityManager,
+        EmailService $emailService
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -38,7 +37,6 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             $emailService->sendEmail($user);
             $this->addFlash('notice', 'bravo vous êtes inscrit');
-
 
             return $this->redirectToRoute('home_index');
         }

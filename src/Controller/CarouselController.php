@@ -15,7 +15,7 @@ class CarouselController extends AbstractController
     #[Route('/carousel', name: 'app_carousel')]
     public function index(NasaApiService $nasaApiService, Request $request): Response
     {
-        //ajout d'un formulaire dans la page pour récupérer la date
+        // ajout d'un formulaire dans la page pour récupérer la date
 
         $defaultData = [];
         $form = $this->createFormBuilder($defaultData)
@@ -24,7 +24,7 @@ class CarouselController extends AbstractController
                 'html5' => false,
                 'format' => 'dd/MM/yyyy',
                 'constraints' => [
-                    new DateNotInFuture()
+                    new DateNotInFuture(),
                 ],
             ])
             ->getForm();
@@ -36,20 +36,19 @@ class CarouselController extends AbstractController
         if (isset($startDate)) {
             $imageArray = $nasaApiService->getSeveralPictures($startDate);
 
-            //retirer les images ayant un copyright
+            // retirer les images ayant un copyright
             $imageWithoutCopyright = array_filter($imageArray, function ($image) {
-                return !isset($image['copyright']) || $image['copyright'] === false;
+                return !isset($image['copyright']) || false === $image['copyright'];
             });
         } else {
             $imageToday = [];
             $imageWithoutCopyright = $imageToday;
         }
 
-
-        //dd($imageWithoutCopyright);
+        // dd($imageWithoutCopyright);
         return $this->render('carousel/index.html.twig', [
             'images' => $imageWithoutCopyright,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

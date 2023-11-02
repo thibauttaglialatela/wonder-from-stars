@@ -7,14 +7,13 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class DateNotInFutureValidator extends ConstraintValidator
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate(mixed $value, Constraint $constraint)
     {
         if ($value > new \DateTime()) {
-            $this->context->buildViolation($constraint->message)->addViolation();
+            $this->context->buildViolation($constraint->getTargets())->addViolation();
         }
     }
 }
