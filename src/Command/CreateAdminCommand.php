@@ -18,10 +18,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 )]
 class CreateAdminCommand extends Command
 {
-    public function __construct(private UserRepository              $userRepository,
-                                private UserPasswordHasherInterface $passwordHasher
-    )
-    {
+    public function __construct(private UserRepository $userRepository,
+        private UserPasswordHasherInterface $passwordHasher
+    ) {
         parent::__construct();
     }
 
@@ -31,7 +30,7 @@ class CreateAdminCommand extends Command
             ->addArgument('email', InputArgument::REQUIRED, 'The email of the user')
             ->addArgument('password', InputArgument::REQUIRED, 'The password of the user')
             ->addArgument('pseudo', InputArgument::OPTIONAL, 'The pseudo of the user. Not mandatory')
-            ->setHelp("This command allows you to create an admin user");
+            ->setHelp('This command allows you to create an admin user');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -49,12 +48,12 @@ class CreateAdminCommand extends Command
 
         $pseudo = $input->getArgument('pseudo');
 
-        //tester si le user existe déjà
+        // tester si le user existe déjà
         $user = $this->userRepository->findOneBy(['email' => $email]);
         if ($user) {
             throw new \InvalidArgumentException('User already exists');
         }
-        //code to create the admin user
+        // code to create the admin user
         $user = new User();
         $user->setEmail($email);
         $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
@@ -63,14 +62,8 @@ class CreateAdminCommand extends Command
         $user->setRoles(['ROLE_ADMIN']);
         $this->userRepository->save($user, true);
 
-
-
-
         $io->success('A new admin User has been created.');
-
-
 
         return Command::SUCCESS;
     }
-
 }

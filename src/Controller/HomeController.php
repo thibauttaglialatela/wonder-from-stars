@@ -6,7 +6,8 @@ use App\Service\NasaApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-#[Route('/', name:'home_')]
+
+#[Route('/', name: 'home_')]
 class HomeController extends AbstractController
 {
     #[Route('', name: 'index')]
@@ -15,7 +16,7 @@ class HomeController extends AbstractController
         $image = $nasaApiService->getApod();
 
         return $this->render('home/index.html.twig', [
-            'image' => $image
+            'image' => $image,
         ]);
     }
 }

@@ -19,7 +19,15 @@ class Media
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'Medias', targetEntity: Picture::class)]
+    /**
+     * @var Collection<\App\Entity\Picture
+     */
     private Collection $pictures;
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     public function __construct()
     {
