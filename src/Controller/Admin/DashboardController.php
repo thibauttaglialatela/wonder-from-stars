@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Invitation;
 use App\Entity\Media;
 use App\Entity\Picture;
 use App\Entity\User;
@@ -33,6 +34,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToCrud('Images', 'fa fa-image', Picture::class);
+        yield MenuItem::linkToCrud('Invitation', 'fa fa-envelope', Invitation::class);
         yield MenuItem::linkToCrud('Medias', 'fa fa-image', Media::class);
         yield MenuItem::linkToCrud('User', 'fa fa-user', User::class);
         yield MenuItem::linkToCrud('UserPicture', 'fa fa-user', UserPicture::class);

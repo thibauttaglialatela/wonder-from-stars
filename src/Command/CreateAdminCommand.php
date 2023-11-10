@@ -59,7 +59,7 @@ class CreateAdminCommand extends Command
         $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
         $user->setPseudo($pseudo);
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles('ROLE_ADMIN');
         $this->userRepository->save($user, true);
 
         $io->success('A new admin User has been created.');
