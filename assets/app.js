@@ -8,6 +8,8 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 import 'tw-elements';
+import 'htmx.org';
+window.htmx = require('htmx.org');
 
 // Initialization for ES Users
 import {
