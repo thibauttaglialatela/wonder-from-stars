@@ -19,8 +19,10 @@
         <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200 px-3">
             Veuillez sélectionner une date de début de recherche de photos.
         </p>
+        <form id="nasa-search-form" hx-post="{{ path('app_carousel') }}" hx-target="#image-container">
         {{ form_start(form) }}
         <div
+
                 class="relative mb-3"
                 id="datepicker-disable-future"
                 data-te-input-wrapper-init>
@@ -54,25 +56,14 @@
             Select
         </button>
         {{ form_end(form) }}
+        </form>
     </div>
-    {% if images is not empty %}
-        <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
-            <div class="-m-1 flex flex-wrap md:-m-2">
-                {% for image in images %}
-                    <div class="flex w-full md:w-1/3 flex-wrap mb-5">
-                        <figure class="w-full p-1 md:p-2">
-                            <img
-                                    alt="{{ image.title }}"
-                                    class="block h-full w-full rounded-lg object-cover object-center"
-                                    src="{{ image.url }}" />
-                            <figcaption class="text-white text-center w-full truncate">{{ image.title }}</figcaption>
-                        </figure>
-                    </div>
-                {% endfor %}
-            </div>
+    <section>
+        <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12" id="image-container"
+             hx-swap="outerHTML">
         </div>
+    </section>
 
-    {% endif %}
 
 
 {% endblock %}

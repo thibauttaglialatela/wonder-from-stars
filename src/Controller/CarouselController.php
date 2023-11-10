@@ -2,52 +2,38 @@
 
 namespace App\Controller;
 
+use App\Form\NasaSearchFormType;
 use App\Service\NasaApiService;
-use App\Validator\DateNotInFuture;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CarouselController extends AbstractController
 {
-    #[Route('/carousel', name: 'app_carousel')]
+    #[Route('/carousel', name: 'app_carousel', methods: ['GET', 'POST'])]
     public function index(NasaApiService $nasaApiService, Request $request): Response
     {
-        // ajout d'un formulaire dans la page pour récupérer la date
+        $form = $this->createForm(NasaSearchFormType::class);
 
-        $defaultData = [];
-        $form = $this->createFormBuilder($defaultData)
-            ->add('start_date', DateType::class, [
-                'widget' => 'single_text',
-                'html5' => false,
-                'format' => 'dd/MM/yyyy',
-                'constraints' => [
-                    new DateNotInFuture(),
-                ],
-            ])
-            ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $startDate = $data['start_date']->format('Y-m-d');
-        }
-        if (isset($startDate)) {
             $imageArray = $nasaApiService->getSeveralPictures($startDate);
 
-            // retirer les images ayant un copyright
             $imageWithoutCopyright = array_filter($imageArray, function ($image) {
-                return !isset($image['copyright']) || false === $image['copyright'];
+                // Vérifier si media_type est "image" et s'il n'y a pas de copyright
+                return isset($image['media_type']) && 'image' === $image['media_type'] &&
+                    (!isset($image['copyright']) || false === $image['copyright']);
             });
-        } else {
-            $imageToday = [];
-            $imageWithoutCopyright = $imageToday;
+
+            return $this->render('carousel/_images.html.twig', [
+                'image_without_copyright' => $imageWithoutCopyright,
+            ]);
         }
 
-        // dd($imageWithoutCopyright);
         return $this->render('carousel/index.html.twig', [
-            'images' => $imageWithoutCopyright,
             'form' => $form->createView(),
         ]);
     }
