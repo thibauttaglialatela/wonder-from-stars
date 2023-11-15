@@ -40,7 +40,9 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'The passwords must match',
                 'required' => true,
                 'first_options' => [
-                    'help' => '⚠ Your password must be at least 8 characters long and contain at least one letter, one number, and one special character (@$!%*#?&).',
+                    'help' => '⚠ Your password must be at least 18 characters long, using only uppercase and 
+                        lowercase letters, as well as numbers. Make sure to include at least one lowercase letter 
+                        and one uppercase letter in your password to enhance its security.',
                 ],
                 'second_options' => [
                     'help' => '⚠ required',
@@ -49,14 +51,16 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new Length([
-                        'min' => 8,
+                        'min' => 18,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                     new Regex([
-                        'pattern' => '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/',
-                        'message' => 'Your password must be at least 8 characters long and contain at least one letter, one number, and one special character (@$!%*#?&).',
+                        'pattern' => '^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{18,}$^',
+                        'message' => 'Your password must be at least 18 characters long, using only uppercase and 
+                        lowercase letters, as well as numbers. Make sure to include at least one lowercase letter 
+                        and one uppercase letter in your password to enhance its security.',
                     ]),
                     new NotBlank(),
                 ],
