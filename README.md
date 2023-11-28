@@ -14,6 +14,8 @@ Fonctionnalités disponible pour l'administrateur
 ***
 Instruction pour installer le projet
 1. Cloner le projet
+2. Composer install
+3. npm install
 2. Faire une copie du fichier .env et le renommer en .env.local
 3. aller sur le site de l'API de la NASA à l'adresse https://api.nasa.gov/ et faire une demande de clé.
 4. Ajouter la ligne suivante au fichier .env.local : NASA_API_KEY={LA CLE API}

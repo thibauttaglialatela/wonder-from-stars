@@ -38,6 +38,12 @@ class Picture
      */
     private Collection $userPictures;
 
+    #[ORM\Column]
+    private ?bool $isValidated = false;
+
+    #[ORM\Column(length: 255)]
+    private ?string $alt = null;
+
     public function __construct()
     {
         $this->userPictures = new ArrayCollection();
@@ -134,6 +140,30 @@ class Picture
                 $userPicture->setPictureCollector(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): static
+    {
+        $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
+    public function setAlt(string $alt): static
+    {
+        $this->alt = $alt;
 
         return $this;
     }

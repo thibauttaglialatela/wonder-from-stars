@@ -29,9 +29,11 @@ class AppFixtures extends Fixture
             $picture = new Picture();
             $picture->setTitle($faker->realText(80));
             $picture->setDescription($faker->paragraph());
-            $picture->setUrl('https://picsum.photos/300');
+            $picture->setUrl('https://picsum.photos/id/537/300');
+            $picture->setAlt($faker->realText);
             $picture->setDate($faker->dateTime());
             $picture->setMedias($faker->randomElement($medias));
+            $picture->setIsValidated(true);
             $manager->persist($picture);
             $pictures[] = $picture;
         }
