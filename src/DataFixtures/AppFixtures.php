@@ -24,19 +24,19 @@ class AppFixtures extends Fixture
         }
 
         // création de 10 images
-        $pictures = [];
+        /*$pictures = [];
         for ($i = 0; $i < 10; ++$i) {
             $picture = new Picture();
             $picture->setTitle($faker->realText(80));
             $picture->setDescription($faker->paragraph());
-            $picture->setUrl('https://picsum.photos/id/537/300');
+            $picture->setPictureFilename('https://picsum.photos/id/537/300');
             $picture->setAlt($faker->realText);
             $picture->setDate($faker->dateTime());
             $picture->setMedias($faker->randomElement($medias));
             $picture->setIsValidated(true);
             $manager->persist($picture);
             $pictures[] = $picture;
-        }
+        }*/
 
         $manager->flush();
     }

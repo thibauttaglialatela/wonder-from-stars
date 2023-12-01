@@ -6,12 +6,14 @@ use App\Entity\Media;
 use App\Entity\Picture;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class PictureFormType extends AbstractType
 {
@@ -27,7 +29,22 @@ class PictureFormType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description de la photo'
             ])
-            ->add('url', UrlType::class)
+            ->add('pictureFile', FileType::class, [
+                'label' => 'Picture (Image file)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.'
+                    ])
+                ]
+            ])
             ->add('Medias', EntityType::class, [
                 'class' => Media::class,
                 'choice_label' => 'name',

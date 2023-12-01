@@ -15,5 +15,7 @@ liip_imagine:
         image_compressed:
             quality: 75
             filters:
-                format: { type: webp }
+                format:
+                    type: webp
+
 
