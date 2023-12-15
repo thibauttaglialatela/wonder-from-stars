@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Picture;
+use App\Entity\UserPicture;
 use App\Form\PictureFormType;
 use App\Repository\PictureRepository;
 use App\Service\PictureUploader;
@@ -21,7 +22,7 @@ class PictureController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(PictureRepository $pictureRepository): Response
     {
-        $images = $pictureRepository->findAll();
+        $images = $pictureRepository->findBy(['isValidated' => true]);
 
         return $this->render('picture/index.html.twig', [
             'images' => $images,
@@ -36,22 +37,28 @@ class PictureController extends AbstractController
     $picture = new Picture();
     //ajout de la date à la création
     $picture->setDate(new \DateTime());
+    //on récupére l'utilisateur connecté
+    $user = $this->getUser();
+    $userPicture = new UserPicture();
+    $userPicture->setCollector($user);
 
     $form = $this->createForm(PictureFormType::class, $picture);
 
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
+        $pictureUploader->setUploadDir($this->getParameter('pictures_directory'));
+
         /** @var UploadedFile $pictureFile */
         $pictureFile = $form->get('pictureFile')->getData();
         if ($pictureFile) {
-            $pictureFileName = $pictureUploader->addPicture($pictureFile);
-            $picture->setPictureFilename($pictureFileName);
+            $picture->setPictureFile($pictureFile, $pictureUploader);
+            $userPicture->setPictureCollector($picture);
+            $userPicture->setCreatedAt(new \DateTime());
         }
 
-
-        $picture = $form->getData();
         // ... perform some action, such as saving the picture to the database
         $entityManager->persist($picture);
+        $entityManager->persist($userPicture);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_picture_index', [], 301);

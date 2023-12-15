@@ -16,9 +16,10 @@ class HomeController extends AbstractController
         $image = $nasaApiService->getApod();
         if (isset($image['media_type']) && 'image' === $image['media_type']) {
             $filteredImage = $image;
-        } else {
+        } elseif (isset($image['copyrght'])) {
             $filteredImage = [];
         }
+
 
         return $this->render('home/index.html.twig', [
             'image' => $filteredImage,

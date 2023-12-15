@@ -50,9 +50,9 @@ class PictureFormType extends AbstractType
                 'choice_label' => 'name',
                 'expanded' => 'true',
             ])
-            ->add('submit', SubmitType::class, [
+/*            ->add('submit', SubmitType::class, [
                 'label' => 'Click me'
-            ])
+            ])*/
         ;
     }
 

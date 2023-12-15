@@ -3,17 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use App\Service\PictureUploader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
 class Picture
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -38,7 +40,7 @@ class Picture
     #[ORM\JoinColumn(nullable: false)]
     private ?Media $Medias = null;
 
-    #[ORM\OneToMany(mappedBy: 'pictureCollector', targetEntity: UserPicture::class)]
+    #[ORM\OneToMany(mappedBy: 'pictureCollector', targetEntity: UserPicture::class, cascade: ['remove'])]
     /**
      * @var Collection<\App\Entity\UserPicture
      */
@@ -169,6 +171,12 @@ class Picture
         return $this;
     }
 
+    public function setPictureFile(UploadedFile $file, PictureUploader $uploader, string $uploadDir = null): self
+    {
+        $this->pictureFilename = $uploader->addPicture($file, $uploadDir);
+        return $this;
+    }
+
     public function getPictureFilename(): ?string
     {
         return $this->pictureFilename;
@@ -180,4 +188,5 @@ class Picture
 
         return $this;
     }
+
 }

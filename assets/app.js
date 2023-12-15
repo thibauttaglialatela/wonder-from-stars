@@ -19,10 +19,11 @@ import {
     Input,
     Ripple,
     initTE,
-    Carousel
+    Carousel,
+    Modal
 } from "tw-elements";
 
-initTE({ Input, Ripple, Collapse, Dropdown, Carousel, Datepicker });
+initTE({ Input, Ripple, Collapse, Dropdown, Carousel, Datepicker, Modal });
 
 const datepickerDisableFuture = document.getElementById('datepicker-disable-future');
 new Datepicker(datepickerDisableFuture, {

@@ -2,39 +2,46 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\Admin\Traits\ReadOnlyTrait;
 use App\Entity\Picture;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class PictureCrudController extends AbstractCrudController
 {
-    use ReadOnlyTrait;
-
     public static function getEntityFqcn(): string
     {
         return Picture::class;
     }
 
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            DateTimeField::new('Date'),
-            TextField::new('Title')->setLabel('Titre'),
-            ImageField::new('url'),
+            IdField::new('id')->hideOnForm(),
+            DateField::new('date'),
+            TextField::new('title'),
+            TextField::new('alt'),
+            TextareaField::new('description'),
+            BooleanField::new('isValidated'),
+            TextField::new('pictureFilename'),
             AssociationField::new('Medias'),
         ];
     }
 
-    public function configureCrud(Crud $crud): Crud
+    public function configureActions(Actions $actions): Actions
     {
-        return $crud
-            ->showEntityActionsInlined()
-            ->setEntityLabelInSingular('Picture')
-            ->setEntityLabelInPlural('Pictures');
+        return $actions
+            ->setPermission(Action::EDIT, 'ROLE_ADMIN')
+            ->disable(Action::NEW);
     }
+
 }
