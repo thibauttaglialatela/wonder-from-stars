@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -32,7 +33,11 @@ class PictureCrudController extends AbstractCrudController
             TextField::new('alt'),
             TextareaField::new('description'),
             BooleanField::new('isValidated'),
-            TextField::new('pictureFilename'),
+            ImageField::new('pictureFilename')
+                ->setBasePath('uploads/images')
+                ->setUploadDir('public/uploads/images')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(false),
             AssociationField::new('Medias'),
         ];
     }
