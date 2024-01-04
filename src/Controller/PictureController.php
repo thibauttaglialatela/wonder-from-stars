@@ -24,16 +24,18 @@ class PictureController extends AbstractController
     {
         $images = $pictureRepository->findBy(['isValidated' => true]);
 
+
         return $this->render('picture/index.html.twig', [
             'images' => $images,
         ]);
     }
 
 //    méthode permettant à un utilisateur enregistré d'ajouter une image
-#[IsGranted('ROLE_USER')]
 #[Route('/add', name: 'add')]
     public function addPicture(Request $request, EntityManagerInterface $entityManager, PictureUploader $pictureUploader): Response
 {
+    $this->denyAccessUnlessGranted('ACCESS_MODAL', null, 'Access denied.');
+
     $picture = new Picture();
     //ajout de la date à la création
     $picture->setDate(new \DateTime());
@@ -61,11 +63,11 @@ class PictureController extends AbstractController
         $entityManager->persist($userPicture);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_picture_index', [], 301);
+        return $this->redirectToRoute('home_index', [], 301);
 
     }
 
-    return $this->render('picture/_new.html.twig', [
+    return $this->render('picture/new.html.twig', [
         'form' => $form
     ]);
 }

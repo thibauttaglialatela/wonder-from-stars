@@ -1,13 +1,3 @@
-<div class="px-4 md:px-0 lg:w-fit">
-    <div class="md:mx-6 md:p-12 bg-blue-100 rounded-lg">
-        <!--Logo-->
-        <div class="text-center">
-            <img
-                    class="mx-auto w-48"
-                    src="{{ asset('build/logo-rocket-wonders.png') }}"
-                    alt="logo" />
-        </div>
-{{ form_start(form) }}
 <div class="relative mb-4" data-te-input-wrapper-init>
     {{ form_errors(form.title) }}
     {{ form_widget(form.title, {'attr': {
@@ -17,67 +7,49 @@
     }}) }}
     {{ form_label(form.title,null, {'label_attr': {
         'class': 'pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary-900 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary',
-        'for': "exampleFormControlInput11"
+        'for': "exampleFormControlInput1"
     }}) }}
 </div>
-{#Texte alternatif#}
+{# Texte alternatif #}
 <div class="relative mb-4" data-te-input-wrapper-init>
     {{ form_errors(form.alt) }}
     {{ form_widget(form.alt, {'attr': {
         'class':"peer block min-h-[auto] w-full rounded border-2 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0",
-        'id': "exampleFormControlInput1",
+        'id': "exampleFormControlInput2",
         'placeholder': ''
     }}) }}
     {{ form_label(form.alt, 'texte alternatif de la photo', {'label_attr': {
         'class': 'pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary-600 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary',
-        'for': "exampleFormControlInput11"
+        'for': "exampleFormControlInput2"
     }}) }}
 </div>
-{#Description de la photo#}
+{# Description de la photo #}
 <div class="relative mb-4" data-te-input-wrapper-init>
     {{ form_errors(form.description) }}
     {{ form_widget(form.description, {'attr': {
         'class':"peer block min-h-[auto] w-full rounded border-2 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0",
-        'id': "exampleFormControlInput1",
+        'id': "exampleFormControlInput3",
         'placeholder': ''
     }}) }}
     {{ form_label(form.description, 'Description de la photo', {'label_attr': {
         'class': 'pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary-600 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary',
-        'for': "exampleFormControlInput11"
+        'for': "exampleFormControlInput3"
     }}) }}
 </div>
-{#Uploade file#}
+{# Uploade file #}
 <div class="relative mb-4" data-te-input-wrapper-init>
     {{ form_errors(form.pictureFile) }}
     {{ form_widget(form.pictureFile, {'attr': {
         'class':"peer block min-h-[auto] w-full rounded border-2 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0",
-        'id': "exampleFormControlInput1",
+        'id': "exampleFormControlInput4",
         'placeholder': ''
     }}) }}
 </div>
-{#choix du média#}
+{# choix du média #}
 <div class="relative mb-4" data-te-input-wrapper-init>
     {{ form_errors(form.Medias) }}
     {{ form_widget(form.Medias, {'attr': {
         'class':"peer block min-h-[auto] w-full rounded border-2 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0",
-        'id': "exampleFormControlInput1",
+        'id': "exampleFormControlInput4",
     }}) }}
-    {#{{ form_label(form.Medias, '', {'label_attr': {
-        'class': 'pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary-600 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary',
-        'for': "exampleFormControlInput11"
-    }}) }}#}
-</div>
-<!--Submit button-->
-<div class="flex items-center justify-between pb-6">
-    <button
-            class="inline-block rounded border-2 border-sky-400 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-sky-700 transition duration-150 ease-in-out hover:border-sky-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-sky-600 focus:border-sky-600 focus:text-sky-600 focus:outline-none focus:ring-0 active:border-sky-700 active:text-sky-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-            type="submit"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-    >
-        Save
-    </button>
-</div>
-{{ form_end(form) }}
-    </div>
 </div>
