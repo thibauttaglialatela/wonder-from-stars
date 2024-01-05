@@ -6,10 +6,13 @@ use App\Entity\Picture;
 use App\Entity\UserPicture;
 use App\Form\PictureFormType;
 use App\Repository\PictureRepository;
+use App\Repository\UserRepository;
 use App\Service\PictureUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +39,8 @@ class PictureController extends AbstractController
     public function addPicture(Request                $request,
                                EntityManagerInterface $entityManager,
                                PictureUploader        $pictureUploader,
-                               MailerInterface        $mailer
+                               MailerInterface        $mailer,
+    UserRepository $userRepository
     ): Response
     {
         $this->denyAccessUnlessGranted('ACCESS_MODAL', null, 'Access denied.');
@@ -68,9 +72,13 @@ class PictureController extends AbstractController
             $entityManager->persist($userPicture);
             $entityManager->flush();
             //envoie du mail à l'administrateur pour validation image
+            $admins = $userRepository->findBy(['roles' => ['ROLE_ADMIN']]);
+            $adminsEmails = [];
+            forEach($admins as $admin) {
+                $adminsEmails[] = $admin->getEmail();
+            }
             $email = (new TemplatedEmail())
-                ->from('admin@wonders.com')
-                ->to('master.yoda@jedi.com')
+                ->to(...$adminsEmails)
                 ->subject('nouvelle photo à valider')
                 ->htmlTemplate('emails/image_validation.html.twig');
             $mailer->send($email);
