@@ -25,28 +25,26 @@
                                 src="{{ asset('uploads/images/' ~ image.pictureFilename) }}"/>
                         <figcaption class="text-white text-center w-full truncate">{{ image.title }}</figcaption>
                     </figure>
+                    <div class="mb-12 pb-1 pt-1 text-center mx-auto">
+                    <a
+                            href="{{ path("app_picture_show", {'id': image.id}) }}"
+                            type="button"
+                            data-te-ripple-init
+                            data-te-ripple-color="light"
+                            class="bg-gradient-to-r from-sky-950 to-sky-100  mb-3 inline-block w-fit rounded px-6 pb-2 pt-2.5
+                text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition
+        duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]
+        focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0
+        active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                    >
+                        Show
+                    </a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
     {% if app.user %}
-        {#<div class="mb-12 pb-1 pt-1 text-center">
-            <button hx-get="{{ path('app_picture_add') }}"
-                    hx-trigger="click"
-                    hx-target="#modalContent"
-                    type="button"
-                    class="bg-gradient-to-r from-sky-950 to-sky-100  mb-3 inline-block w-fit rounded px-6 pb-2 pt-2.5
-                text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition
-        duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]
-        focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0
-        active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-                    data-te-toggle="modal"
-                    data-te-target="#modalPictureAdd"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                Add picture
-            </button>
-        </div>#}
         <div class="mb-12 pb-1 pt-1 text-center">
             <a
                     href="{{ path("app_picture_add") }}"

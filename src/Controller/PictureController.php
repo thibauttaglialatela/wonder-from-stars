@@ -97,4 +97,11 @@ class PictureController extends AbstractController
             'form' => $form
         ]);
     }
+    #[Route('/{id}', name: 'show')]
+    public function showPicture(Picture $picture): Response
+    {
+        return $this->render('picture/show.html.twig', [
+            'picture' => $picture
+        ]);
+    }
 }
