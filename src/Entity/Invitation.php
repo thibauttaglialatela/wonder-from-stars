@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 class Invitation
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column]
     private ?int $id = null;
 

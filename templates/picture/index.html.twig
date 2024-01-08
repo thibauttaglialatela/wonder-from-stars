@@ -6,28 +6,63 @@
     <div class="container max-w-5xl mx-auto pt-16 md:pt-32 text-center break-normal">
         <!--Title-->
         <h1 class="text-white font-extrabold text-2xl md:text-6xl w-full">
-            {% if app.user %}
-                🔭 Welcome to Wonders from the sky {{ app.user.pseudo}} 🔭
-            {% else %}
-                🔭 Pictures from our users 🔭
-            {% endif %}
+                🔭 Images from our users 🔭
         </h1>
     </div>
     <div class="container mx-auto px-0 py-2 lg:px-20 lg:pt-12">
         <div class="-m-1 flex flex-wrap md:-m-2">
+            {% if images is empty %}
+                <div>
+                    <p>Sorry no images today</p>
+                </div>
+            {% endif %}
             {% for image in images %}
                 <div class="flex w-full md:w-1/3 flex-wrap mb-5">
                     <figure class="w-full p-1 md:p-2">
                         <img
-                                alt="{{ image.title }}"
-                                class="block h-full w-full rounded-lg object-cover object-center"
-                                src="{{ image.url }}" />
+                                alt="{{ image.alt }}"
+                                class="block max-w-full h-auto rounded-lg object-cover object-center"
+                                src="{{ asset('uploads/images/' ~ image.pictureFilename) }}"/>
                         <figcaption class="text-white text-center w-full truncate">{{ image.title }}</figcaption>
                     </figure>
                 </div>
             {% endfor %}
         </div>
     </div>
+    {% if app.user %}
+        {#<div class="mb-12 pb-1 pt-1 text-center">
+            <button hx-get="{{ path('app_picture_add') }}"
+                    hx-trigger="click"
+                    hx-target="#modalContent"
+                    type="button"
+                    class="bg-gradient-to-r from-sky-950 to-sky-100  mb-3 inline-block w-fit rounded px-6 pb-2 pt-2.5
+                text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition
+        duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]
+        focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0
+        active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                    data-te-toggle="modal"
+                    data-te-target="#modalPictureAdd"
+                    data-te-ripple-init
+                    data-te-ripple-color="light">
+                Add picture
+            </button>
+        </div>#}
+        <div class="mb-12 pb-1 pt-1 text-center">
+            <a
+                    href="{{ path("app_picture_add") }}"
+                    type="button"
+                    data-te-ripple-init
+                    data-te-ripple-color="light"
+                    class="bg-gradient-to-r from-sky-950 to-sky-100  mb-3 inline-block w-fit rounded px-6 pb-2 pt-2.5
+                text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition
+        duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]
+        focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0
+        active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+            >
+                Add picture
+            </a>
 
+        </div>
+    {% endif %}
 
 {% endblock %}

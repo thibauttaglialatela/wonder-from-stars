@@ -14,10 +14,12 @@ class HomeController extends AbstractController
     public function index(NasaApiService $nasaApiService): Response
     {
         $image = $nasaApiService->getApod();
-        if (isset($image['media_type']) && 'image' === $image['media_type']) {
-            $filteredImage = $image;
-        } else {
-            $filteredImage = [];
+        $filteredImage = null;
+
+        if (isset($image['media_type']) && $image['media_type'] === 'image') {
+            if (!isset($image['copyright']) || empty($image['copyright'])) {
+                $filteredImage = $image;
+            }
         }
 
         return $this->render('home/index.html.twig', [

@@ -3,16 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use App\Service\PictureUploader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
 class Picture
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -23,20 +26,36 @@ class Picture
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Your title must have at least {{ limit }} characters',
+        maxMessage: 'The title cannot be longer than {{ limit }}!'
+    )]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $url = null;
 
     #[ORM\ManyToOne(inversedBy: 'pictures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Media $Medias = null;
 
-    #[ORM\OneToMany(mappedBy: 'pictureCollector', targetEntity: UserPicture::class)]
+    #[ORM\OneToMany(mappedBy: 'pictureCollector', targetEntity: UserPicture::class, cascade: ['remove'])]
     /**
      * @var Collection<\App\Entity\UserPicture
      */
     private Collection $userPictures;
+
+    #[ORM\Column]
+    private ?bool $isValidated = false;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
+    private ?string $alt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pictureFilename = null;
 
     public function __construct()
     {
@@ -84,17 +103,7 @@ class Picture
         return $this;
     }
 
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
 
-    public function setUrl(string $url): static
-    {
-        $this->url = $url;
-
-        return $this;
-    }
 
     public function getMedias(): ?Media
     {
@@ -137,4 +146,47 @@ class Picture
 
         return $this;
     }
+
+    public function isIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): static
+    {
+        $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
+    public function setAlt(string $alt): static
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    public function setPictureFile(UploadedFile $file, PictureUploader $uploader, string $uploadDir = null): self
+    {
+        $this->pictureFilename = $uploader->addPicture($file, $uploadDir);
+        return $this;
+    }
+
+    public function getPictureFilename(): ?string
+    {
+        return $this->pictureFilename;
+    }
+
+    public function setPictureFilename(string $pictureFilename): static
+    {
+        $this->pictureFilename = $pictureFilename;
+
+        return $this;
+    }
+
 }

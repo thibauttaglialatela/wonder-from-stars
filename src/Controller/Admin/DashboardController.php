@@ -19,6 +19,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted("IS_AUTHENTICATED_FULLY");
         //        return parent::index();
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700">
+        <div class="container h-full p-10 max-w-6xl mx-auto">
+            <div
+                    class="g-6 flex h-full flex-wrap items-center justify-center">
+                <div class="w-full">
+                    <div
+                            class="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+                        <div class="g-0 lg:flex lg:flex-wrap">
+                            <!-- Left column container-->
+                            <div class="px-4 md:px-0 lg:w-6/12">
+                                <div class="md:mx-6 md:p-12">
+                                    <!--Logo-->
+                                    <div class="text-center">
+                                        <img
+                                                class="mx-auto w-48"
+                                                src="{{ asset('build/logo-rocket-wonders.png') }}"
+                                                alt="logo" />
+                                        <h4 class="mb-12 mt-1 pb-1 text-xl font-semibold">
+                                            Picture form
+                                        </h4>
+                                    </div>
+                                    {{ form_start(form) }}
+                                    {{ include('picture/_form.html.twig') }}
+                                    <div
+                                            class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                                        <!--Submit button-->
+                                        <div class="flex items-center justify-between pb-6">
+                                            <button
+                                                    class="inline-block rounded border-2 border-sky-400 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-sky-700 transition duration-150 ease-in-out hover:border-sky-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-sky-600 focus:border-sky-600 focus:text-sky-600 focus:outline-none focus:ring-0 active:border-sky-700 active:text-sky-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+                                                    type="submit"
+                                                    data-te-ripple-init
+                                                    data-te-ripple-color="light"
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+
+                            <!-- Right column container with background and description-->
+                            <div
+                                    class="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-sky-950 to-sky-100"
+                            >
+                                <div class="px-4 py-6 text-white md:mx-6 md:p-12">
+                                    <p class="md:text-2xl text-sm">
+                                        Ci-contre, vous trouverez un formulaire permettant d'ajouter une photo à la
+                                        collection. Votre proposition d'image ne sera publiée aprés validation par
+                                        l'administrateur du site.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

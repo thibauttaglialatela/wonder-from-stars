@@ -49,7 +49,7 @@
                 <li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                     <!-- HomePage link -->
                     <a
-                            class="{{ currentUrl == path('home_index') ? 'text-blue-500' : 'text-neutral-50 transition duration-200 hover:text-neutral-100 hover:ease-in-out' }} focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2"
+                            class="{{ currentUrl == path('home_index') ? 'text-blue-500' : 'text-neutral-50 transition duration-200 hover:text-neutral-100 hover:ease-in-out' }} hover:underline hover:ease-in-out focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2"
                             href="{{ path('home_index') }}"
                             data-te-nav-link-ref
                     >Home</a
@@ -58,7 +58,7 @@
                 <li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                     <!-- CarouselPage link -->
                     <a
-                            class="{{ currentUrl == path('app_carousel') ? 'text-blue-500' : 'text-neutral-50 transition duration-200 hover:text-neutral-100 hover:ease-in-out' }} focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2"
+                            class="{{ currentUrl == path('app_carousel') ? 'text-blue-500' : 'text-neutral-50 transition duration-200 hover:text-neutral-100 hover:ease-in-out' }} hover:underline hover:ease-in-out focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2"
                             href="{{ path('app_carousel') }}"
                             data-te-nav-link-ref
                     >Images from the NASA</a
@@ -67,8 +67,8 @@
                 <li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                     <!-- CarouselPage link -->
                     <a
-                            class="{{ currentUrl == path('app_picture') ? 'text-blue-500' : 'text-neutral-50 transition duration-200 hover:text-neutral-100 hover:ease-in-out' }} focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2"
-                            href="{{ path('app_picture') }}"
+                            class="{{ currentUrl == path('app_picture_index') ? 'text-blue-500' : 'text-neutral-50 transition duration-200 hover:text-neutral-100 hover:ease-in-out' }} hover:underline hover:ease-in-out focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2"
+                            href="{{ path('app_picture_index') }}"
                             data-te-nav-link-ref
                     >Images from our users</a
                     >
@@ -92,12 +92,12 @@
         <!-- Right elements -->
         <div class="relative flex items-center">
             {% if app.user %}
-                <div class="text-neutral-700 transition duration-200 hover:text-neutral-100 hover:ease-in-out focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400">
+                <div class="text-neutral-700 transition duration-200 focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400">
                     {{ app.user.pseudo ? app.user.pseudo : app.user.email }} is connected
                 </div>
                 <!-- Logout link -->
                 <a
-                        class="text-neutral-700 transition duration-200 hover:text-neutral-100 hover:ease-in-out focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                        class="text-neutral-700 transition duration-200 hover:underline hover:ease-in-out focus:text-neutral-200 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                         href="{{ path('app_logout') }}"
                         data-te-nav-link-ref
                 >Logout</a

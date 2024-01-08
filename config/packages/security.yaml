@@ -21,6 +21,10 @@ security:
                 check_path: app_login
                 default_target_path: home_index
                 enable_csrf: true
+                use_referer: true
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 1800
             login_throttling:
                 max_attempts: 3
             logout:
