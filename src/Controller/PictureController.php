@@ -9,13 +9,13 @@ use App\Repository\PictureRepository;
 use App\Repository\UserRepository;
 use App\Service\PictureUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,7 +40,8 @@ class PictureController extends AbstractController
                                EntityManagerInterface $entityManager,
                                PictureUploader        $pictureUploader,
                                MailerInterface        $mailer,
-    UserRepository $userRepository
+                               UserRepository         $userRepository,
+                               LoggerInterface        $logger
     ): Response
     {
         $this->denyAccessUnlessGranted('ACCESS_MODAL', null, 'Access denied.');
@@ -74,14 +75,19 @@ class PictureController extends AbstractController
             //envoie du mail à l'administrateur pour validation image
             $admins = $userRepository->findBy(['roles' => ['ROLE_ADMIN']]);
             $adminsEmails = [];
-            forEach($admins as $admin) {
+            foreach ($admins as $admin) {
                 $adminsEmails[] = $admin->getEmail();
             }
             $email = (new TemplatedEmail())
                 ->to(...$adminsEmails)
                 ->subject('nouvelle photo à valider')
                 ->htmlTemplate('emails/image_validation.html.twig');
-            $mailer->send($email);
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $exception) {
+                $logger->error("Une erreur s'est produite : " . $exception->getMessage());
+            }
+
 
             return $this->redirectToRoute('home_index', [], 301);
 
