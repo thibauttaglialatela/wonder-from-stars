@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 #[Route('/picture', name: 'app_picture_')]
@@ -47,16 +48,14 @@ class PictureController extends AbstractController
         $this->denyAccessUnlessGranted('ACCESS_MODAL', null, 'Access denied.');
 
         $picture = new Picture();
+        $user = $this->getUser();
+
         //ajout de la date à la création
         $picture->setDate(new \DateTime());
-        //on récupére l'utilisateur connecté
-        $user = $this->getUser();
-        $userPicture = new UserPicture();
-        $userPicture->setCollector($user);
 
         $form = $this->createForm(PictureFormType::class, $picture);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $pictureUploader->setUploadDir($this->getParameter('pictures_directory'));
 
@@ -64,8 +63,13 @@ class PictureController extends AbstractController
             $pictureFile = $form->get('pictureFile')->getData();
             if ($pictureFile) {
                 $picture->setPictureFile($pictureFile, $pictureUploader);
-                $userPicture->setPictureCollector($picture);
+
+                $userPicture = new UserPicture();
                 $userPicture->setCreatedAt(new \DateTime());
+                $userPicture->setCollector($user);
+                $userPicture->setPictureCollector($picture);
+
+                $entityManager->persist($userPicture);
             }
 
             // ... perform some action, such as saving the picture to the database
@@ -94,14 +98,42 @@ class PictureController extends AbstractController
         }
 
         return $this->render('picture/new.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'picture' => $picture
         ]);
     }
     #[Route('/{id}', name: 'show')]
     public function showPicture(Picture $picture): Response
     {
+        $creator = $picture->getUserPictures()->first()->getCollector();
         return $this->render('picture/show.html.twig', [
-            'picture' => $picture
+            'picture' => $picture,
+            'picture_creator' => $creator
         ]);
+    }
+
+    #[Route('/edit/{id}', name:'edit')]
+    #[IsGranted('edit', 'picture', 'Only the creator can edit this picture')]
+    public function editPicture(Picture $picture, Request $request, PictureRepository $pictureRepository): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+        if ($picture->getUserPictures()->first()->getCollector() !== $user) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à éditer cette image.');
+        }
+        $form = $this->createForm(PictureFormType::class, $picture);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pictureRepository->save($picture, true);
+
+            return $this->redirectToRoute('app_picture_show', ['id' => $picture->getId()], Response::HTTP_FOUND);
+        }
+
+        return $this->render('picture/edit.html.twig', [
+            'form' => $form
+        ]);
+
     }
 }
