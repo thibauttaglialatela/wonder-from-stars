@@ -39,6 +39,22 @@ class PictureCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
             AssociationField::new('Medias'),
+            AssociationField::new('userPictures', 'Créateur')
+                ->formatValue(function ($value, $entity) {
+                    $creatorEmails = [];
+
+                    foreach ($value as $userPicture) {
+                        $creator = $userPicture->getCollector();
+                        if ($creator) {
+                            $creatorEmails[] = $creator->getEmail();
+                        }
+                    }
+
+                    // Convert the array of emails to a comma-separated string
+                    return implode(', ', $creatorEmails);
+                })
+                ->onlyOnIndex(),
+
         ];
     }
 

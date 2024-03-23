@@ -5,15 +5,17 @@
 {% block body %}
     <div class="container max-w-5xl mx-auto pt-16 md:pt-32 text-center break-normal">
         <!--Title-->
-        <h1 class="text-white font-extrabold text-2xl md:text-6xl w-full">
-                🔭 Images from our users 🔭
+        <h1 class="text-white font-extrabold text-xl md:text-6xl w-full">
+            🔭 Images from our users 🔭
         </h1>
     </div>
     <div class="container mx-auto px-0 py-2 lg:px-20 lg:pt-12">
-        <div class="-m-1 flex flex-wrap md:-m-2">
+        <div class="-m-1 flex items-center justify-center flex-wrap md:-m-2 h-screen">
             {% if images is empty %}
                 <div>
-                    <p>Sorry no images today</p>
+                    <h2 class="text-white md:text-6xl w-full mb-2 mt-0 text-4xl font-medium leading-tight">
+                        Sorry no image today
+                    </h2>
                 </div>
             {% endif %}
             {% for image in images %}
@@ -25,43 +27,22 @@
                                 src="{{ asset('uploads/images/' ~ image.pictureFilename) }}"/>
                         <figcaption class="text-white text-center w-full truncate">{{ image.title }}</figcaption>
                     </figure>
+                    <div class="mb-12 pb-1 pt-1 text-center mx-auto">
+                        {{ component('Button:Link', {
+                            href: path("app_picture_show", {'id': image.id}),
+                            buttonText: 'Show'
+                        }) }}
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
     {% if app.user %}
-        {#<div class="mb-12 pb-1 pt-1 text-center">
-            <button hx-get="{{ path('app_picture_add') }}"
-                    hx-trigger="click"
-                    hx-target="#modalContent"
-                    type="button"
-                    class="bg-gradient-to-r from-sky-950 to-sky-100  mb-3 inline-block w-fit rounded px-6 pb-2 pt-2.5
-                text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition
-        duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]
-        focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0
-        active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-                    data-te-toggle="modal"
-                    data-te-target="#modalPictureAdd"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                Add picture
-            </button>
-        </div>#}
         <div class="mb-12 pb-1 pt-1 text-center">
-            <a
-                    href="{{ path("app_picture_add") }}"
-                    type="button"
-                    data-te-ripple-init
-                    data-te-ripple-color="light"
-                    class="bg-gradient-to-r from-sky-950 to-sky-100  mb-3 inline-block w-fit rounded px-6 pb-2 pt-2.5
-                text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition
-        duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]
-        focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0
-        active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-            >
-                Add picture
-            </a>
-
+            {{ component('Button:Link', {
+                href: path("app_picture_add"),
+                buttonText: 'Add picture'
+            }) }}
         </div>
     {% endif %}
 

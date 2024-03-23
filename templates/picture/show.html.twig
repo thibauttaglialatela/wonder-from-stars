@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {% endblock %}
+
+{% block body %}
+    <div class="md:block md:w-2/3 mx-auto mt-12">
+        <div
+                class="block rounded-lg bg-neutral-50 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+
+            <img
+                    class="rounded-t-lg w-full"
+                    src="{{ asset('uploads/images/' ~ picture.pictureFilename) }}"
+                    alt="{{ picture.alt }}"/>
+
+            <div class="p-6">
+                <h1
+                        class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                    {{ picture.title }}
+                </h1>
+                <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+                    {{ picture.description }}
+                </p>
+                <div
+                        class="flex justify-around gap-1.5 rounded-md shadow-[0_4px_9px_-4px_#3b71ca] transition
+                        duration-150 ease-in-out
+                    hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                    focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                    focus:outline-none focus:ring-0 active:bg-primary-700
+                    active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                        role="group">
+                    {% if app.user == picture_creator %}
+                        {{ component('Button:Link', {
+                            href: path('app_picture_edit', {'id': picture.id}),
+                            buttonText: 'Edit'
+                        }) }}
+                    {% endif %}
+                    {{ component('Button:Link', {
+                        href: path('app_picture_index'),
+                        buttonText: 'Back'
+                    }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
