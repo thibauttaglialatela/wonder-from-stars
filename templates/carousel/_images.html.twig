@@ -6,10 +6,16 @@
                     <img
                             alt="{{ image.title }}"
                             class="block h-full w-full rounded-lg object-cover object-center"
-                            src="{{ image.url }}" />
+                            src="{{ image.url }}"/>
                     <figcaption class="text-white text-center w-full truncate">{{ image.title }}</figcaption>
+                    <div class="text-center mt-2">
+                        {{ component('Button:Link', {
+                            href: path('app_carousel_show', {'date': image.date}),
+                            buttonText: 'Show'
+                        }) }}
+                    </div>
                 </figure>
             </div>
         {% endfor %}
-    {%  endif %}
+    {% endif %}
 </div>

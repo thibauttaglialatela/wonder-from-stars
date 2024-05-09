@@ -37,4 +37,16 @@ class CarouselController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/carousel/{date}', name: 'app_carousel_show', methods: 'GET')]
+    public function showImageDetail(NasaApiService $nasaApiService, string $date): Response
+    {
+        $image = $nasaApiService->getOneImage($date);
+
+        return $this->render('carousel/image.html.twig', [
+            'image' => $image
+        ]);
+
+
+    }
 }
