@@ -1,6 +1,9 @@
 twig_component:
     defaults:
         # Namespace & directory for components
+        App\Twig\Components\Card\:
+            template_directory: components/card/
+            name_prefix: Card
         App\Twig\Components\Button\:
             template_directory: components/button/
             name_prefix: Button
