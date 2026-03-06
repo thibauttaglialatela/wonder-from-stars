@@ -1,0 +1,18 @@
+<div
+        class="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark">
+    <figure class="w-full p-1 md:p-2">
+        <img
+                class="rounded-t-lg"
+                src="{{ cardImgSrc }}"
+                alt="{{ cardImgAlt }}" />
+    </figure>
+    <div class="p-6 text-surface dark:text-white">
+        <h5 class="mb-2 text-xl text-center font-medium leading-tight">{{ cardTitle }}</h5>
+        <div class="mb-12 pb-1 pt-1 text-center mx-auto">
+            {{ component('Button:Link', {
+                href: path("app_picture_show", {'id': image.id}),
+                buttonText: 'Show'
+            }) }}
+        </div>
+    </div>
+</div>

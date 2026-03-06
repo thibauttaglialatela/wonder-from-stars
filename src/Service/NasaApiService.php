@@ -52,4 +52,21 @@ class NasaApiService
 
         return $response->toArray();
     }
+
+    public function getOneImage(string $date): array
+    {
+        $response = $this->httpClient->request(
+            'GET',
+            'https://api.nasa.gov/planetary/apod',
+            [
+                'query' => [
+                    'api_key' => $this->getApiKey(),
+                    'start_date' => $date,
+                    'end_date' => $date,
+                ]
+            ]
+        );
+
+        return $response->toArray();
+    }
 }
